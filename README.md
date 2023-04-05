@@ -8,5 +8,5 @@ The shell is a command-line interpreter or shell that provides a command line us
 Compiling the program: gcc -Wall -Werror -Wextra -pedantic *.c -o hsh
 
 # Authors: 
-Cason Bobo
-Caramon Hofstetter
+* Cason Bobo
+* Caramon Hofstetter
