@@ -2,4 +2,11 @@
 =====================
 
 # Description:
-In this project we are tasked with creating our own simple UNIX command interpreter. The program must have the exact same output as sh (/bin/sh) as well as the exact same error output. The only difference is when you print an error, the name of the program must be equivalent to your argv[0].
+The shell is a command-line interpreter or shell that provides a command line user interface for Unix-like operating systems. The shell is both an interactive command language and a scripting language, and is used by the operating system to control the execution of the system using shell scripts.
+
+# Instructions:
+Compiling the program: gcc -Wall -Werror -Wextra -pedantic *.c -o hsh
+
+# Authors: 
+Cason Bobo
+Caramon Hofstetter
