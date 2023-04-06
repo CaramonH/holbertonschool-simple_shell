@@ -1,0 +1,11 @@
+.\" Manpage for shell_script.
+.TH man 3 "05 April 2023" "1.0" "simple_shell man page"
+.SH NAME
+simple_shell
+.SH SYNOPSIS
+simple_shell CaramonH CasonBobo
+.SH DESCRIPTION
+simple_shell is a simple implementation of a command language interpreter that executes
+commands read from standard input or a specified file.
+.SH OPTIONS
+The simple_shell does not take any options. However, you can supply username.
