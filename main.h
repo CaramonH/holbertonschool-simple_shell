@@ -26,4 +26,8 @@ typedef struct list_s
 	struct listy_s *next;
 } list_t;
 
+/* Prototypes */
+list_t *add_node(list_t **head, const char *str);
+list_t *add_node_end(list_t **head, const char *str);
+list_t *insert_node_at_index(list_t **head, unsigned int idx, char *str);
 #endif
