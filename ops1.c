@@ -81,7 +81,7 @@ list_t *insert_node_at_index(list_t **head, unsigned int idx, char *str)
 		return (newNode);
 	}
 
-	while(temp)
+	while (temp)
 	{
 		if (i == idx - 1)
 			break;
