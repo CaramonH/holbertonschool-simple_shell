@@ -13,17 +13,17 @@ int main(void)
 	size_t size = 0;
 	char **words = NULL;
 	int count;
+	int CoP = 666;
 	int i = 0;
-	int CoP;
 
 	while (1)
 	{
 		printf("$ ");
 		getline(&command, &size, stdin);
 		words = split_string(command, &count);
-
+		
 		if (strcmp(words[0], "/bin/exit") == 0)
-			break;
+			exit(EXIT_SUCCESS);
 
 		for (; i < count ; i++)
 		{
@@ -31,31 +31,41 @@ int main(void)
 		}
 
 		if (access(words[0], X_OK) == 0)
+		{
 			CoP = fork();
-		else
-		{
-			printf("Command doesn't exist\n");
-			break;
-		}
-
-		printf("Forked by %d\n", CoP);
-
-		if (CoP == 0)
-		{
-			if (execve(words[0], words, NULL) == -1)
+			printf("Forked by %d\n", CoP);
+			if (CoP == 0)
 			{
-				perror("Error");
-				return (-1);
+				printf("Child executing.\n");
+				if (execve(words[0], words, NULL) == -1)
+				{
+					perror("Execve Error");
+					return (-1);
+				}
+				return (0);
 			}
-			return (0);
+			else
+			{
+				printf("Parent waiting.\n");
+				wait(NULL);
+				printf("Parent awakend.\n");
+			}
 		}
 		else
 		{
-			wait(NULL);
+			perror("Command Error");
 		}
+
+	
+		printf("Just before end of while loop: %d\n", CoP);
 	}
+	
+	printf("End of prog: %d\n", CoP);
+	free(words);
+	free(command);
 	return (0);
 }
+
 /**
  *split_string - this function splits the input string and
  *makes sure it is malloced and counted
