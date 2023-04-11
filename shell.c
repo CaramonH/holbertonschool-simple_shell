@@ -54,6 +54,7 @@ int main(void)
 			wait(NULL);
 		}
 	}
+	signal(SIGINT, sig_stop);
 	return (0);
 }
 /**

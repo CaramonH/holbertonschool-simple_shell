@@ -8,8 +8,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-
-signal(SIGINT, sig_stop);
+#include <signal.h>
 
 void sig_stop(int sNum);
 char **split_string(char *str, int *count);
