@@ -59,14 +59,9 @@ int main(void)
 	
 		printf("Just before end of while loop: %d\n", CoP);
 	}
-<<<<<<< HEAD
 	signal(SIGINT, sig_stop);
-=======
-	
-	printf("End of prog: %d\n", CoP);
 	free(words);
 	free(command);
->>>>>>> 3ec01c323bea2fba7298e33ccb914e4da95f148d
 	return (0);
 }
 

@@ -6,7 +6,7 @@
  */
 void sig_stop(int sNum)
 {
-	char *sigMsg = "\nYou shall not pass!";
+	char *sigMsg = "\nYou shell not pass!";
 
 	(void)sNum;
 	write(STDOUT_FILENO, sigMsg, strlen(sigMsg));
