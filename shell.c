@@ -1,4 +1,4 @@
-#include "hell.h"
+#include "hell.h":wq
 #define MAX_ARGS 100
 /**
  *main - the main func for our simple shell
@@ -18,10 +18,8 @@ int main(void)
 
 	while (1)
 	{
-		printf("Entered while loop: %d\n", CoP);
 		printf("$ ");
 		getline(&command, &size, stdin);
-		printf("Command received: %s", command);
 		words = split_string(command, &count);
 
 		if (strcmp(words[0], "/bin/exit") == 0)
