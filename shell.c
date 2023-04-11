@@ -18,9 +18,14 @@ int main(void)
 
 	while (1)
 	{
+		printf("Entered while loop: %d\n", CoP);
 		printf("$ ");
 		getline(&command, &size, stdin);
+		printf("Command received: %s", command);
 		words = split_string(command, &count);
+
+		if (strcmp(words[0], "/bin/exit") == 0)
+			break;
 
 		for (; i < count ; i++)
 			printf("token %d: %s\n", i, words[i]);
