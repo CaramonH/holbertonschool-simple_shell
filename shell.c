@@ -26,8 +26,19 @@ int main(void)
 			break;
 
 		for (; i < count ; i++)
+		{
 			printf("token %d: %s\n", i, words[i]);
-		CoP = fork();
+		}
+
+		if (access(words[0], X_OK) == 0)
+			CoP = fork();
+		else
+		{
+			printf("Command doesn't exist\n");
+			break;
+		}
+
+		printf("Forked by %d\n", CoP);
 
 		if (CoP == 0)
 		{
