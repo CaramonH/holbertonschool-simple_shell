@@ -1,4 +1,4 @@
-#include "hell.h":wq
+#include "hell.h"
 #define MAX_ARGS 100
 /**
  *main - the main func for our simple shell
