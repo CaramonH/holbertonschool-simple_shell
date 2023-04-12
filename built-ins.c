@@ -4,7 +4,7 @@
  * func_printenv - prints the current environment
  * @environ: environment variable
  */
-void func_printenv(char **env)
+void func_printenv(char **environ)
 {
 	int i = 0;
 
