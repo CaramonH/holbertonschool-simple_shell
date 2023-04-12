@@ -10,7 +10,6 @@
 #include <sys/wait.h>
 #include <signal.h>
 
-void sig_stop(int sNum);
 char **split_string(char *str, int *count);
 int main(void);
 

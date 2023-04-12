@@ -13,53 +13,35 @@ int main(void)
 	size_t size = 0;
 	char **words = NULL;
 	int count;
-	int CoP = 666;
-	int i = 0;
+	int CoP = 100;
 
 	while (1)
 	{
 		printf("$ ");
 		getline(&command, &size, stdin);
 		words = split_string(command, &count);
-		
 		if (strcmp(words[0], "/bin/exit") == 0)
-			exit(EXIT_SUCCESS);
-
-		for (; i < count ; i++)
 		{
-			printf("token %d: %s\n", i, words[i]);
+			free(words);
+			free(command);
+			exit(EXIT_SUCCESS);
 		}
 
 		if (access(words[0], X_OK) == 0)
 		{
 			CoP = fork();
-			printf("Forked by %d\n", CoP);
 			if (CoP == 0)
 			{
-				printf("Child executing.\n");
 				if (execve(words[0], words, NULL) == -1)
-				{
-					perror("Execve Error");
 					return (-1);
-				}
 				return (0);
 			}
 			else
-			{
-				printf("Parent waiting.\n");
 				wait(NULL);
-				printf("Parent awakend.\n");
-			}
 		}
 		else
-		{
 			perror("Command Error");
-		}
-
-	
-		printf("Just before end of while loop: %d\n", CoP);
 	}
-	signal(SIGINT, sig_stop);
 	free(words);
 	free(command);
 	return (0);
