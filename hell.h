@@ -10,6 +10,11 @@
 #include <sys/wait.h>
 #include <signal.h>
 
+void _puts(char *str);
+int _strlen(const char *s);
+int _putchar(char c);
+char *str_concat(char *s1, char *s2);
+int _strcmp(char *s1, char *s2);
 char **split_string(char *str, int *count);
 int main(void);
 
