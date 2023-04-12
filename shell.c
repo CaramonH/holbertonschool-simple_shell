@@ -18,7 +18,13 @@ int main(void)
 	while (1)
 	{
 		printf("$ ");
-		getline(&command, &size, stdin);
+		if (getline(&command, &size, stdin) == -1)
+		{
+			printf("\n");
+			exit(EXIT_SUCCESS);
+		}
+		if (command[0] == '\n')
+			continue;
 		words = split_string(command, &count);
 		if (strcmp(words[0], "/bin/exit") == 0)
 		{
@@ -42,9 +48,6 @@ int main(void)
 		else
 			perror("Command Error");
 	}
-	free(words);
-	free(command);
-	return (0);
 }
 
 /**
