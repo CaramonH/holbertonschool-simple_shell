@@ -1,19 +1,17 @@
 #include "hell.h"
 
 /**
- * print_environment - prints the current environment
- * Return: void
+ * printenv - prints the current environment
+ * 
  */
-void print_environment(void)
+void printenv(void)
 {
-	int i = 0;
-	char *env;
+	unsigned int i = 0;
 
-	while (environ[i] != NULL)
+	while (environ[i])
 	{
-		env = environ[i];
-		write(STDOUT_FILENO, env, _strlen(env));
-		write(STDOUT_FILENO, "\n", 1);
+		_puts(environ[i]);
+		_putchar('\n');
 		i++;
 	}
 }
