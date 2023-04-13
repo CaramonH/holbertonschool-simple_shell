@@ -13,16 +13,14 @@ int main(void)
 	size_t size = 0;
 	char **words = NULL;
 	int count;
-	int CoP = 100;
+	int CoP;
 
 	while (1)
 	{
-		printf("$ ");
+		if (isatty(STDIN_FILENO))
+            		write(STDOUT_FILENO, "$ ", 2);
 		if (getline(&command, &size, stdin) == -1)
-		{
-			printf("\n");
 			exit(EXIT_SUCCESS);
-		}
 		if (command[0] == '\n')
 			continue;
 		words = split_string(command, &count);
@@ -72,8 +70,14 @@ char **split_string(char *str, int *count)
 	{
 		if (i == 0 && token[0] != '/')
 		{
-			/*malloc for the space of /bin/ in cmd*/
 			cmd = malloc(strlen("/bin/") + strlen(token) + 1);
+			if (cmd == NULL)
+			{
+				perror("malloc error");
+				free(cmd);
+				exit(EXIT_FAILURE);
+			}
+			/*malloc for the space of /bin/ in cmd*/
 			strcpy(cmd, "/bin/");
 			strcat(cmd, token);
 			words[i] = cmd;
@@ -88,9 +92,17 @@ char **split_string(char *str, int *count)
 	*count = i;
 	/*malloc for the space of the string into result*/
 	result = malloc((i + 1) * sizeof(char *));
+	if (result == NULL)
+	{
+		perror("malloc error");
+		exit(EXIT_FAILURE);
+	}
 	for (c = 0; c < i; c++)
+	{
 		result[c] = words[c];
+	}
 	result[i] = NULL;
-
+	if (cmd != NULL && i == 0 && token[0] != '/')
+		free(cmd);
 	return (result);
 }
