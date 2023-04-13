@@ -14,7 +14,7 @@ extern char **environ;
 /* Prototypes */
 
 /* built-in */
-void func_printenv(char **env);
+void print_environment(void);
 
 /* strings */
 void _puts(char *str);
