@@ -16,4 +16,4 @@ void print_environment(void)
 		write(STDOUT_FILENO, "\n", 1);
 		i++;
 	}
-}	
+}
