@@ -8,7 +8,7 @@
  *Return: the result var that stores the tokenized string
  */
 
-char **split_string(char *str, int *count)
+char **split_string(char *str)
 {
 	char *token;
 	char *words[MAX_ARGS];
@@ -35,13 +35,10 @@ char **split_string(char *str, int *count)
 			words[i] = cmd;
 		}
 		else
-		{
 			words[i] = token;
-		}
 		i++;
 		token = strtok(NULL, " \n");
 	}
-	*count = i;
 	/*malloc for the space of the string into result*/
 	result = malloc((i + 1) * sizeof(char *));
 	if (result == NULL)
@@ -50,9 +47,7 @@ char **split_string(char *str, int *count)
 		exit(EXIT_FAILURE);
 	}
 	for (c = 0; c < i; c++)
-	{
 		result[c] = words[c];
-	}
 	result[i] = NULL;
 	if (cmd != NULL && i == 0 && token[0] != '/')
 		free(cmd);

@@ -13,9 +13,6 @@ extern char **environ;
 
 /* Prototypes */
 
-/* built-in */
-void printenv(void);
-
 /* strings */
 void _puts(char *str);
 int _strlen(const char *s);
@@ -24,6 +21,8 @@ char *str_concat(char *s1, char *s2);
 int _strcmp(char *s1, char *s2);
 
 /* shell */
+void free_them(char *words, char *command);
+void exit_cmd(char *words);
 char **split_string(char *str, int *count);
 int main(void);
 

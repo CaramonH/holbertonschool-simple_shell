@@ -11,13 +11,12 @@ int main(void)
 	char *command = NULL;
 	size_t size = 0;
 	char **words = NULL;
-	int count;
 	int CoP;
 
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
-            		write(STDOUT_FILENO, "$ ", 2);
+			write(STDOUT_FILENO, "$ ", 2);
 		if (getline(&command, &size, stdin) == -1)
 		{
 			free(command);
@@ -25,7 +24,7 @@ int main(void)
 		}
 		if (command[0] == '\n')
 			continue;
-		words = split_string(command, &count);
+		words = split_string(command);
 		if (strcmp(words[0], "bin/exit") == 0)
 			exit_cmd;
 		if (access(words[0], X_OK) == 0)
