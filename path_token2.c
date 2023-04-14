@@ -22,25 +22,6 @@ char *_strchr(const char *s, char c)
 	return (NULL);
 }
 /**
- * cleanstr - removes newline chars from user input
- * @line: user input line
- * Return: always 0
- */
-int cleanstr(char *line)
-{
-	int i = 0;
-
-	while (line[i])
-	{
-		if (line[i] == '\n')
-		{
-			line[i] = '\0';
-		}
-		i++;
-	}
-	return (0);
-}
-/**
  * *_strcat - meows 2 strings together
  * @dest: where big string goes and other smol string comes
  * @src: smol string input

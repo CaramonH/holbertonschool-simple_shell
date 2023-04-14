@@ -1,3 +1,5 @@
+#include "hell.h"
+
 /**
  * exit_cmd - pulls free_them and exits
  * @words: words to be freed
@@ -24,7 +26,7 @@ void free_them(char *words, char *command)
  * @s: string input
  * Return: string length
  */
-int _strlen(char *s)
+int _strlen(const char *s)
 {
 	int a = 0;
 
