@@ -11,10 +11,8 @@ int main(void)
 	char **words = NULL;
 	size_t size = 0;
 	int CoP;
-	char *path = NULL, *paths[20], *command = NULL;
+	char *command = NULL;
 
-	path = getenv("PATH");
-	tokenize_path(path, paths);
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
@@ -28,7 +26,11 @@ int main(void)
 			continue;
 		words = split_string(command);
 		if (strcmp(words[0], "bin/exit") == 0)
-			exit_cmd;
+		{
+			free(command);
+			free(words);
+			exit(EXIT_SUCCESS);
+		}
 		if (access(words[0], X_OK) == 0)
 		{
 			CoP = fork();
@@ -36,10 +38,12 @@ int main(void)
 			{
 				if (execve(words[0], words, NULL) == -1)
 				{
-					free_them;
+					free(command);
+					free(words);
 					return (-1);
 				}
-				free_them;
+				free(command);
+				free(words);
 				return (0);
 			}
 			else
@@ -47,6 +51,5 @@ int main(void)
 		}
 		else
 			perror("Command Error");
-		free_them;
 	}
 }

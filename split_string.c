@@ -15,18 +15,18 @@ char **split_string(char *str)
 	int i = 0;
 	int c;
 	char *cmd;
+	char *path = NULL;
+	char *paths[20];
+
+	path = getenv("PATH");
+	tokenize_path(path, paths);
 
 	token = strtok(str, " \n");
 	while (token != NULL && i < MAX_ARGS)
 	{
 		if (i == 0 && token[0] != '/')
 		{
-			if (cmd == NULL)
-			{
-				perror("malloc error");
-				free(cmd);
-				exit(EXIT_FAILURE);
-			}
+			cmd = malloc(_strlen(paths[i]) + _strlen(token) + 1);
 			strcpy(cmd, "/bin/");
 			strcat(cmd, token);
 			words[i] = cmd;
