@@ -4,7 +4,6 @@
  *split_string - this function splits the input string and
  *makes sure it is malloced and counted
  *@str:the string that we need to tokenize and output
- *@count: the full length of the string
  *Return: the result var that stores the tokenized string
  */
 
@@ -22,14 +21,12 @@ char **split_string(char *str)
 	{
 		if (i == 0 && token[0] != '/')
 		{
-			cmd = malloc(strlen("/bin/") + strlen(token) + 1);
 			if (cmd == NULL)
 			{
 				perror("malloc error");
 				free(cmd);
 				exit(EXIT_FAILURE);
 			}
-			/*malloc for the space of /bin/ in cmd*/
 			strcpy(cmd, "/bin/");
 			strcat(cmd, token);
 			words[i] = cmd;
@@ -39,7 +36,6 @@ char **split_string(char *str)
 		i++;
 		token = strtok(NULL, " \n");
 	}
-	/*malloc for the space of the string into result*/
 	result = malloc((i + 1) * sizeof(char *));
 	if (result == NULL)
 	{

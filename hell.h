@@ -23,7 +23,7 @@ int _strcmp(char *s1, char *s2);
 /* shell */
 void free_them(char *words, char *command);
 void exit_cmd(char *words);
-char **split_string(char *str, int *count);
+char **split_string(char *str);
 int main(void);
 
 #endif
