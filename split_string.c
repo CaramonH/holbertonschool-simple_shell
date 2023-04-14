@@ -1,4 +1,5 @@
 #include "hell.h"
+#define MAX_ARGS 100
 /**
  *split_string - this function splits the input string and
  *makes sure it is malloced and counted

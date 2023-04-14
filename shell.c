@@ -1,5 +1,4 @@
 #include "hell.h"
-#define MAX_ARGS 100
 /**
  *main - the main func for our simple shell
  *upon running the program this will display a $ and wait for input
@@ -20,24 +19,24 @@ int main(void)
 		if (isatty(STDIN_FILENO))
             		write(STDOUT_FILENO, "$ ", 2);
 		if (getline(&command, &size, stdin) == -1)
-			exit(EXIT_SUCCESS);
-		if (command[0] == '\n')
-			continue;
-		words = split_string(command, &count);
-		if (strcmp(words[0], "/bin/exit") == 0)
 		{
-			free(words);
 			free(command);
 			exit(EXIT_SUCCESS);
 		}
-
+		if (command[0] == '\n')
+			continue;
+		words = split_string(command, &count);
+		if (strcmp(words[0], "bin/exit") == 0)
+			exit_cmd;
 		if (access(words[0], X_OK) == 0)
 		{
 			CoP = fork();
 			if (CoP == 0)
 			{
 				if (execve(words[0], words, NULL) == -1)
+					free_them;
 					return (-1);
+				free_them;
 				return (0);
 			}
 			else
@@ -45,5 +44,6 @@ int main(void)
 		}
 		else
 			perror("Command Error");
+		free_them;
 	}
 }
