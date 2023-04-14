@@ -11,7 +11,7 @@ int main(void)
 	char **words = NULL;
 	size_t size = 0;
 	int CoP;
-	char *path = NULL, paths[20], *command = NULL;
+	char *path = NULL, *paths[20], *command = NULL;
 
 	path = getenv("PATH");
 	tokenize_path(path, paths);
