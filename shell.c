@@ -16,37 +16,43 @@ int main(int argc, char **argv, char **env)
 	char *input = NULL, *path = NULL;
 	size_t size = 0;
 	char *tokarr[20], *patharr[20];
-	int ret_value = 0, i = 1;
+	int ret_value = 0, i;
 
 	(void)argc;
 	(void)argv;
-	while (env[i] != NULL)
-	{
-		if (strncmp(env[i], "PATH=", 5) == 0)
-		{
-			path = (env[i] + 5);
-			break;
-		}
-		i++;
-	}
-	tokenize_string(path, ":", patharr);
-
 	while (1)
 	{
+		i = 0;
+		while (env[i] != NULL)
+
+		{
+			if (_strncmp(env[i], "PATH=", 5) == 0)
+			{
+				path = _strdup((env[i] + 5));
+				break;
+			}
+			i++;
+		}
+		tokenize_string(path, ":", patharr);
 		if (isatty(STDIN_FILENO))
-			write(STDOUT_FILENO, "$ ", 2);
+			write(STDOUT_FILENO, "BENRON $ ", 9);
 		if (getline(&input, &size, stdin) == -1)
 		{
 			free(input);
+			free(path);
 			exit(EXIT_SUCCESS);
 		}
 		tokenize_string(input, " \n\t", tokarr);
 
 		if (!tokarr[0])
+		{
+			free(path);
 			continue;
+		}
 		if (_strcmp(tokarr[0], "exit") == 0)
 		{
 			free(input);
+			free(path);
 			exit(EXIT_SUCCESS);
 		}
 		if (_strcmp(tokarr[0], "env") == 0)
@@ -56,18 +62,18 @@ int main(int argc, char **argv, char **env)
 				write(STDOUT_FILENO, env[i], _strlen(env[i]));
 				write(STDOUT_FILENO, "\n", 1);
 			}
+			free(path);
 			continue;
 		}
 
 		if (access(tokarr[0], X_OK) == 0)
-			create_child(tokarr[0], tokarr);
+			create_child(path, tokarr[0], tokarr);
 		else
-			ret_value = check_path(patharr, tokarr);
+			ret_value = check_path(path, patharr, tokarr);
 
 	}
 	return (ret_value);
 }
-
 
 /**
  * tokenize_string - tokenize a passed in string
@@ -132,6 +138,7 @@ int create_child(char *call_path, char **str_arr)
 	pid_t sig;
 	int status = 0;
 
+	free(stdpath);
 	cop = fork();
 	if (cop == 0)
 	{
