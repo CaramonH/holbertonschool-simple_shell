@@ -1,32 +1,60 @@
-#include "hell.h"
+#include "main.h"
+
+char *_strcat(char *dest, char *src);
+char *_strcpy(char *dest, char *src);
+int _strlen(char *s);
+int _strncmp(char *s1, char *s2, int n);
+int _strcmp(char *s1, char *s2);
 
 /**
- * exit_cmd - pulls free_them and exits
- * @words: words to be freed
+ * *_strcat - meows 2 strings together
+ * @dest: where big string goes and other smol string comes
+ * @src: smol string input
+ * Return: big string
  */
-void exit_cmd(char *words)
+char *_strcat(char *dest, char *src)
 {
-	free_them;
-	exit(EXIT_SUCCESS);
+	int i = 0, j = 0;
+
+	while (dest[i])
+	{
+		i++;
+	}
+	while (src[j])
+	{
+		dest[i] = src[j];
+		i++;
+		j++;
+	}
+	dest[i] = '\0';
+	return (dest);
 }
 
 /**
- *free_them - let them out
- *@words: These are the words of our people
- *@command: These are the commands of our people
- *Return: none
+ * *_strcpy - function for to copy chararr
+ * @src: source of chararr
+ * @dest: destination of chararr
+ * Return: finaldestination
  */
-void free_them(char *words, char *command)
+char *_strcpy(char *dest, char *src)
 {
-	free(words);
-	free(command);
+	int a = 0;
+
+	while (*(src + a))
+	{
+		*(dest + a) = *(src + a);
+		a++;
+	}
+	dest[a] = '\0';
+	return (dest);
 }
+
 /**
  * _strlen - function to find length of string
  * @s: string input
  * Return: string length
  */
-int _strlen(const char *s)
+int _strlen(char *s)
 {
 	int a = 0;
 

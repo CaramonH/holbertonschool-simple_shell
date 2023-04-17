@@ -1,52 +1,151 @@
-#include "hell.h"
+#include "main.h"
+
+void tokenize_string(char *str, char *delims, char **tokens);
+int create_child(char *call_path, char **str_arr);
+int check_path(char **path_array, char **token_array);
+
 /**
- *main - the main func for our simple shell
- *upon running the program this will display a $ and wait for input
- *once it recieves input it will fork and deliver it to split string
- *Return: either 0 if pass or -1 if fail
+ * main - entry point
+ * @argc: arg counter
+ * @argv: array of args
+ * @env: environment
+ * Return: int
  */
-
-int main(void)
+int main(int argc, char **argv, char **env)
 {
-	char **words = NULL;
+	char *input = NULL, *path = NULL;
 	size_t size = 0;
-	int CoP;
-	char *path = NULL, *paths[20], *command = NULL;
+	char *tokarr[20], *patharr[20];
+	int ret_value = 0, i = 1;
 
-	path = getenv("PATH");
-	tokenize_path(path, paths);
+	(void)argc;
+	(void)argv;
+	while (env[i] != NULL)
+	{
+		if (strncmp(env[i], "PATH=", 5) == 0)
+		{
+			path = (env[i] + 5);
+			break;
+		}
+		i++;
+	}
+	tokenize_string(path, ":", patharr);
+
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, "$ ", 2);
-		if (getline(&command, &size, stdin) == -1)
+		if (getline(&input, &size, stdin) == -1)
 		{
-			free(command);
+			free(input);
 			exit(EXIT_SUCCESS);
 		}
-		if (command[0] == '\n')
+		tokenize_string(input, " \n\t", tokarr);
+
+		if (!tokarr[0])
 			continue;
-		words = split_string(command);
-		if (strcmp(words[0], "bin/exit") == 0)
-			exit_cmd;
-		if (access(words[0], X_OK) == 0)
+		if (_strcmp(tokarr[0], "exit") == 0)
 		{
-			CoP = fork();
-			if (CoP == 0)
-			{
-				if (execve(words[0], words, NULL) == -1)
-				{
-					free_them;
-					return (-1);
-				}
-				free_them;
-				return (0);
-			}
-			else
-				wait(NULL);
+			free(input);
+			exit(EXIT_SUCCESS);
 		}
+		if (_strcmp(tokarr[0], "env") == 0)
+		{
+			for (i = 0 ; env[i] != NULL ; i++)
+			{
+				write(STDOUT_FILENO, env[i], _strlen(env[i]));
+				write(STDOUT_FILENO, "\n", 1);
+			}
+			continue;
+		}
+
+		if (access(tokarr[0], X_OK) == 0)
+			create_child(tokarr[0], tokarr);
 		else
-			perror("Command Error");
-		free_them;
+			ret_value = check_path(patharr, tokarr);
+
 	}
+	return (ret_value);
+}
+
+
+/**
+ * tokenize_string - tokenize a passed in string
+ * @str: string to tokenize
+ * @delims: deliminators
+ * @tokens: the array to save the tokens
+ * Return: void
+ */
+void tokenize_string(char *str, char *delims, char **tokens)
+{
+	char *path_token = strtok(str, delims);
+	int i = 0;
+
+	while (path_token != NULL)
+	{
+		tokens[i] = path_token;
+		i++;
+		path_token = strtok(NULL, delims);
+	}
+	tokens[i] = NULL;
+}
+
+/**
+ * check_path - check if the path leads to a system call
+ * @path_array: the string array containing the paths
+ * @token_array: the string array of tokens
+ * Return: int 127
+ */
+int check_path(char **path_array, char **token_array)
+{
+	int i = 0;
+	char *comp_path = NULL;
+	struct stat x;
+
+	while (path_array[i] != NULL)
+	{
+		comp_path = malloc(_strlen(token_array[0]) + _strlen(path_array[i]) + 2);
+		_strcpy(comp_path, path_array[i]);
+		_strcat(comp_path, "/");
+		_strcat(comp_path, token_array[0]);
+		if (stat(comp_path, &x) == 0)
+		{
+			create_child(comp_path, token_array);
+			free(comp_path);
+			return (0);
+		}
+		free(comp_path);
+		i++;
+	}
+	return (127);
+}
+
+/**
+ * create_child - function to create child process
+ * @call_path: path of system call
+ * @str_arr: array of string
+ * Return: int
+ */
+int create_child(char *call_path, char **str_arr)
+{
+	pid_t cop;
+	pid_t sig;
+	int status = 0;
+
+	cop = fork();
+	if (cop == 0)
+	{
+		if (execve(call_path, str_arr, NULL) == -1)
+			exit(EXIT_FAILURE);
+	}
+	else if (cop < 0)
+		exit(EXIT_FAILURE);
+	else
+	{
+		do {
+			sig = waitpid(cop, &status, WUNTRACED);
+		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+	}
+	(void) sig;
+	return (status);
 }
