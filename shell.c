@@ -15,6 +15,7 @@ int main(int argc, char **argv, char **env)
 {
 	char *input = NULL, *path = NULL;
 	size_t size = 0;
+<<<<<<< HEAD
 	char *tokarr[20], *patharr[20];
 	int ret_value = 0, i = 1;
 
@@ -30,6 +31,10 @@ int main(int argc, char **argv, char **env)
 		i++;
 	}
 	tokenize_string(path, ":", patharr);
+=======
+	int CoP;
+	char *command = NULL;
+>>>>>>> a76507fe22629a9880532450a6519eefffdb6028
 
 	while (1)
 	{
@@ -44,17 +49,40 @@ int main(int argc, char **argv, char **env)
 
 		if (!tokarr[0])
 			continue;
+<<<<<<< HEAD
 		if (_strcmp(tokarr[0], "exit") == 0)
 		{
 			free(input);
 			exit(EXIT_SUCCESS);
 		}
 		if (_strcmp(tokarr[0], "env") == 0)
+=======
+		words = split_string(command);
+		if (strcmp(words[0], "bin/exit") == 0)
+		{
+			free(command);
+			free(words);
+			exit(EXIT_SUCCESS);
+		}
+		if (access(words[0], X_OK) == 0)
+>>>>>>> a76507fe22629a9880532450a6519eefffdb6028
 		{
 			for (i = 0 ; env[i] != NULL ; i++)
 			{
+<<<<<<< HEAD
 				write(STDOUT_FILENO, env[i], _strlen(env[i]));
 				write(STDOUT_FILENO, "\n", 1);
+=======
+				if (execve(words[0], words, NULL) == -1)
+				{
+					free(command);
+					free(words);
+					return (-1);
+				}
+				free(command);
+				free(words);
+				return (0);
+>>>>>>> a76507fe22629a9880532450a6519eefffdb6028
 			}
 			continue;
 		}
@@ -62,6 +90,7 @@ int main(int argc, char **argv, char **env)
 		if (access(tokarr[0], X_OK) == 0)
 			create_child(tokarr[0], tokarr);
 		else
+<<<<<<< HEAD
 			ret_value = check_path(patharr, tokarr);
 
 	}
@@ -145,6 +174,9 @@ int create_child(char *call_path, char **str_arr)
 		do {
 			sig = waitpid(cop, &status, WUNTRACED);
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+=======
+			perror("Command Error");
+>>>>>>> a76507fe22629a9880532450a6519eefffdb6028
 	}
 	(void) sig;
 	return (status);

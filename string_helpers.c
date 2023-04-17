@@ -1,3 +1,4 @@
+<<<<<<< HEAD:string_helpers.c
 #include "main.h"
 
 char *_strcat(char *dest, char *src);
@@ -49,6 +50,9 @@ char *_strcpy(char *dest, char *src)
 	return (dest);
 }
 
+=======
+#include "hell.h"
+>>>>>>> a76507fe22629a9880532450a6519eefffdb6028:built-ins.c
 /**
  * _strlen - function to find length of string
  * @s: string input
