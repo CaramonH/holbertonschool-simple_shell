@@ -1,4 +1,4 @@
-#include "main.h"
+#include "hell.h"
 
 void tokenize_string(char *str, char *delims, char **tokens);
 int create_child(char *call_path, char **str_arr);
