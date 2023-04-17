@@ -1,8 +1,9 @@
 #include "hell.h"
 
 void tokenize_string(char *str, char *delims, char **tokens);
-int create_child(char *call_path, char **str_arr);
-int check_path(char **path_array, char **token_array);
+int create_child(char *stdpath, char *call_path, char **str_arr);
+int check_path(char *stdpath, char **path_array, char **token_array);
+char *_strdup(char *str);
 
 /**
  * main - entry point
@@ -75,6 +76,7 @@ int main(int argc, char **argv, char **env)
 	return (ret_value);
 }
 
+
 /**
  * tokenize_string - tokenize a passed in string
  * @str: string to tokenize
@@ -98,11 +100,12 @@ void tokenize_string(char *str, char *delims, char **tokens)
 
 /**
  * check_path - check if the path leads to a system call
+ * @stdpath: the path variable to free
  * @path_array: the string array containing the paths
  * @token_array: the string array of tokens
  * Return: int 127
  */
-int check_path(char **path_array, char **token_array)
+int check_path(char *stdpath, char **path_array, char **token_array)
 {
 	int i = 0;
 	char *comp_path = NULL;
@@ -116,7 +119,7 @@ int check_path(char **path_array, char **token_array)
 		_strcat(comp_path, token_array[0]);
 		if (stat(comp_path, &x) == 0)
 		{
-			create_child(comp_path, token_array);
+			create_child(stdpath, comp_path, token_array);
 			free(comp_path);
 			return (0);
 		}
@@ -128,11 +131,12 @@ int check_path(char **path_array, char **token_array)
 
 /**
  * create_child - function to create child process
+ * @stdpath: the path variable to free
  * @call_path: path of system call
  * @str_arr: array of string
  * Return: int
  */
-int create_child(char *call_path, char **str_arr)
+int create_child(char *stdpath, char *call_path, char **str_arr)
 {
 	pid_t cop;
 	pid_t sig;
@@ -146,7 +150,9 @@ int create_child(char *call_path, char **str_arr)
 			exit(EXIT_FAILURE);
 	}
 	else if (cop < 0)
+	{
 		exit(EXIT_FAILURE);
+	}
 	else
 	{
 		do {
@@ -155,4 +161,40 @@ int create_child(char *call_path, char **str_arr)
 	}
 	(void) sig;
 	return (status);
+}
+
+/**
+ * *_strdup - ret ptr to newly allocated mem space
+ * @str: string
+ * Return: NULL or ptr to dupe string
+ */
+char *_strdup(char *str)
+{
+	int i = 0;
+	int n = 0;
+	char *ar;
+
+	if (str == NULL)
+	{
+		return (NULL);
+	}
+	while (str[i] != '\0')
+	{
+		i++;
+		n++;
+	}
+	n++;
+
+	ar = malloc(n * sizeof(char));
+	if (ar == NULL)
+	{
+		return (NULL);
+	}
+
+	for (i = 0 ; i < n ; i++)
+	{
+		ar[i] = str[i];
+	}
+
+	return (ar);
 }
