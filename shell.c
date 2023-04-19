@@ -36,7 +36,7 @@ int main(int argc, char **argv, char **env)
 		}
 		tokenize_string(path, ":", patharr);
 		if (isatty(STDIN_FILENO))
-			write(STDOUT_FILENO, "BENRON $ ", 9);
+			write(STDOUT_FILENO, "PEEPEEPOOPOO $ ", 9);
 		if (getline(&input, &size, stdin) == -1)
 		{
 			free(input);
