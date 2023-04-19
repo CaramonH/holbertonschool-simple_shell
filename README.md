@@ -10,3 +10,4 @@ Compiling the program: gcc -Wall -Werror -Wextra -pedantic *.c -o shell
 # Authors: 
 * Cason Bobo
 * Caramon Hofstetter
+![Shell Flow Chart](https://user-images.githubusercontent.com/115739693/233132665-f210a1fa-e562-4b53-9938-26d26f092dfc.jpg)
