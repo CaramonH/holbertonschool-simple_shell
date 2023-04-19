@@ -7,7 +7,13 @@ The shell is a command-line interpreter or shell that provides a command line us
 # Instructions:
 Compiling the program: gcc -Wall -Werror -Wextra -pedantic *.c -o shell
 
+Flow Chart
+======================
+
+![Shell Flow Chart (1)](https://user-images.githubusercontent.com/115739693/233134308-5eb1c221-cef8-4f96-8bfc-bb5454fd42b8.jpg)
+
+
 # Authors: 
 * Cason Bobo
 * Caramon Hofstetter
-![Shell Flow Chart](https://user-images.githubusercontent.com/115739693/233132665-f210a1fa-e562-4b53-9938-26d26f092dfc.jpg)
+
